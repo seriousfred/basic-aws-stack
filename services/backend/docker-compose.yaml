@@ -1,0 +1,42 @@
+networks:
+  backend:
+    external: false
+
+volumes:
+  pgdata:
+
+services:
+
+  backend:
+    image: test/backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ${PWD}/:/home/node/app
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: backend
+      DB_USERNAME: backend
+      DB_PASSWORD: backend
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  postgres:
+    image: postgis/postgis:17-3.5-alpine
+    ports:
+      - '5432'
+    networks:
+      - backend
+    environment:
+      POSTGRES_USER: backend
+      POSTGRES_PASSWORD: backend
+      POSTGRES_DB: backend
+      PG_DATA: /var/lib/postgresql/data
+    volumes:
+      - pgdata:/var/lib/postgresql/data
