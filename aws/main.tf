@@ -54,3 +54,15 @@ module "ecs_cluster" {
   prefix = var.prefix
 }
 
+# task definition
+module "ecs_task_def" {
+  source = "./mods/ecs/task-def"
+  prefix = var.prefix
+  name = "service-${random_id.RANDOM_ID.hex}"
+  repo = module.ecr.ecr_repository_url
+  aws_region = var.aws_region
+  port = 8080
+  s3_arn = module.s3.s3_bucket_arn
+  s3_bucket = module.s3.s3_bucket_id
+}
+
