@@ -19,3 +19,10 @@ module "net" {
 }
 
 
+
+# ecs cluster
+module "ecs_cluster" {
+  source = "./mods/ecs/cluster"
+  prefix = var.prefix
+}
+
