@@ -35,6 +35,12 @@ module "rds" {
   allowed_subnets = module.net.private_subnets
 }
 
+# s3
+module "s3" {
+  source = "./mods/s3"
+  bucket_name = "${var.prefix}-${var.aws_region}-${random_id.RANDOM_ID.hex}"
+}
+
 
 # ecr
 module "ecr" {
