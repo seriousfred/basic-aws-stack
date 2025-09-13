@@ -8,6 +8,12 @@ provider "aws" {
 
 }
 
+# utilities
+resource "random_id" "RANDOM_ID" {
+  byte_length = "6"
+}
+
+
 
 
 # modules
@@ -27,6 +33,13 @@ module "rds" {
   vpc_id = module.net.vpc_id
   subnets = module.net.data_subnets
   allowed_subnets = module.net.private_subnets
+}
+
+
+# ecr
+module "ecr" {
+  source = "./mods/ecr"
+  repo_name = "${var.prefix}/services-${random_id.RANDOM_ID.hex}"
 }
 
 # ecs cluster
