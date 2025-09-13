@@ -9,3 +9,13 @@ provider "aws" {
 }
 
 
+
+# modules
+module "net" {
+  source = "./mods/net"
+  vpc_id = var.vpc_id # will create resources if not empty
+  prefix  = var.prefix
+  cidr   = "10.42.0.0/16"
+}
+
+

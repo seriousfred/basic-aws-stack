@@ -16,3 +16,9 @@ variable "prefix" {
     error_message = "20 chars is enough for a prefix"
   }
 }
+
+variable "vpc_id" {
+  description = "ID of an existing VPC to use, or leave empty to create a new one."
+  type        = string
+}
+
