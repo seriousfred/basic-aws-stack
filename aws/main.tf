@@ -20,6 +20,15 @@ module "net" {
 
 
 
+# rds
+module "rds" {
+  source = "./mods/rds"
+  prefix = var.prefix
+  vpc_id = module.net.vpc_id
+  subnets = module.net.data_subnets
+  allowed_subnets = module.net.private_subnets
+}
+
 # ecs cluster
 module "ecs_cluster" {
   source = "./mods/ecs/cluster"
