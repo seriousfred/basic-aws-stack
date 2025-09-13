@@ -1,0 +1,20 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend service for the application",
+  "private": true,
+  "license": "MIT",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./src/app.js --exec  \"npm run lint && node\""
+  },
+  "keywords": [
+    "nodejs",
+    "express"
+  ],
+  "dependencies": {
+    "dotenv": "^17.2.2",
+    "express": "^4.16.4",
+    "pg": "^8.16.3"
+  }
+}
