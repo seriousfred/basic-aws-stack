@@ -90,5 +90,16 @@ module "ecs_service" {
   alarm_topic_arn   = module.sns.sns_arn
 }
 
+# devops stuffs
+module "devops" {
+  source           = "./mods/devops"
+  prefix           = var.prefix
+  github_token     = var.github_token
+  repository_owner = var.repository_owner
+  repository_name  = var.repository_name
+  ecr_repo         = module.ecr.ecr_repository_url
+  aws_region       = var.aws_region
+  cluster          = module.ecs_cluster.ecs_cluster_name
+  service          = "service-${random_id.RANDOM_ID.hex}"
 }
 

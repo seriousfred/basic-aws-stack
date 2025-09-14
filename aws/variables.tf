@@ -22,3 +22,18 @@ variable "vpc_id" {
   type        = string
 }
 
+variable "github_token" {
+  description = "Github personal access token"
+  type        = string
+  sensitive   = true
+}
+
+variable "repository_owner" {
+  description = "Github repository owner"
+  type        = string
+}
+
+variable "repository_name" {
+  description = "Github repository name"
+  type        = string
+}
