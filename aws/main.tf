@@ -50,6 +50,12 @@ module "s3" {
   bucket_name = "${var.prefix}-${var.aws_region}-${random_id.RANDOM_ID.hex}"
 }
 
+# sns
+module "sns" {
+  source     = "./mods/sns"
+  topic_name = "${var.prefix}-alerts-${random_id.RANDOM_ID.hex}"
+}
+
 
 # ecr
 module "ecr" {
