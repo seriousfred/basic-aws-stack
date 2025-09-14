@@ -59,3 +59,8 @@ variable "multi_az" {
   type        = bool
   default     = false
 }
+
+variable "alarm_topic_arn" {
+  description = "SNS Topic ARN for alarm notifications"
+  type        = string
+}

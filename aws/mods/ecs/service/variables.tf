@@ -47,3 +47,8 @@ variable "listener_priority" {
   description = "ALB Listener priority"
   type        = string
 }
+
+variable "alarm_topic_arn" {
+  description = "SNS Topic ARN for alarm notifications"
+  type        = string
+}

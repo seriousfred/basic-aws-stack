@@ -135,3 +135,19 @@ resource "aws_ssm_parameter" "postgres_port" {
   value = aws_db_instance.postgres.port
 }
 
+# alert if DB CPU is above 80% for 5 minutes
+resource "aws_cloudwatch_metric_alarm" "db_cpu_high" {
+  alarm_name          = "${var.prefix}-postgres-high-cpu"
+  comparison_operator = "GreaterThanOrEqualToThreshold"
+  evaluation_periods  = 1
+  metric_name         = "CPUUtilization"
+  namespace           = "AWS/RDS"
+  period              = 300
+  statistic           = "Average"
+  threshold           = 80
+  alarm_description   = "RDS Postgres CPU utilization is above 80% for 5 minutes"
+  dimensions = {
+    DBInstanceIdentifier = aws_db_instance.postgres.identifier
+  }
+  alarm_actions = [var.alarm_topic_arn]
+}
