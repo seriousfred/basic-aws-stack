@@ -5,6 +5,8 @@
    * [Solution overview](#solution-overview)
    * [Infrastructure](#infrastructure)
    * [Prerequisites](#prerequisites)
+   * [Usage](#usage)
+
 
 
 
@@ -87,3 +89,30 @@ See `~/.aws/credentials`
   github_token = "ghp_{random long string}""
 ```
 
+
+## Usage
+
+### Create a tfvars file
+
++ `aws_profile`: aws profile name (see ~/.aws/credentials)
++ `aws_region`: aws region
++ `prefix`: a prefix to use on every resource
++ `vpc_id`: vpc ID (leave empty to create everything)
++ `github_token`: github token
++ `repository_owner`: github owner
++ `repository_name`: github repo name
+
+
+```bash
+cd aws/
+terraform init
+terraform plan
+terraform apply
+```
+
+or 
+
+```shell
+terraform plan -var aws_profile="your-profile" -var a=1 -var b=2 -var etc=...
+terraform apply -var aws_profile="your-profile" -var a=1 -var b=2 -var etc=...
+```
