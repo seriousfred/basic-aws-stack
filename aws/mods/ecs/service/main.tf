@@ -105,14 +105,14 @@ resource "aws_cloudwatch_metric_alarm" "high_cpu" {
   alarm_name          = "${var.prefix}-${var.name}-high-cpu"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
-  metric_name         = "CPUUtilization"
-  namespace           = "AWS/ECS"
+  metric_name         = "CpuUtilized"
+  namespace           = "ECS/ContainerInsights"
   period              = 300
   statistic           = "Average"
   threshold           = 80
   alarm_description   = "ECS service CPU utilization is above 80% for 5 minutes"
   dimensions = {
-    ClusterName = var.cluster
+    ClusterName = "${var.prefix}-cluster"
     ServiceName = var.name
   }
 
@@ -125,14 +125,14 @@ resource "aws_cloudwatch_metric_alarm" "high_memory" {
   alarm_name          = "${var.prefix}-${var.name}-high-memory"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 1
-  metric_name         = "MemoryUtilization"
-  namespace           = "AWS/ECS"
+  metric_name         = "MemoryUtilized"
+  namespace           = "ECS/ContainerInsights"
   period              = 300
   statistic           = "Average"
   threshold           = 80
   alarm_description   = "ECS service Memory utilization is above 80% for 5 minutes"
   dimensions = {
-    ClusterName = var.cluster
+    ClusterName = "${var.prefix}-cluster"
     ServiceName = var.name
   }
   alarm_actions = [var.alarm_topic_arn]
