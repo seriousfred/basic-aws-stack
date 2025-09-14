@@ -6,6 +6,7 @@
    * [Infrastructure](#infrastructure)
    * [Prerequisites](#prerequisites)
    * [Usage](#usage)
+   * [Sample backend service in NodeJS](#nodejs-api)
    * [License](#license)
 
 
@@ -116,6 +117,24 @@ or
 terraform plan -var aws_profile="your-profile" -var a=1 -var b=2 -var etc=...
 terraform apply -var aws_profile="your-profile" -var a=1 -var b=2 -var etc=...
 ```
+
+
+## NodeJS API
+
+```bash
+$ cd services/backend
+$ docker compose up -d
+
+$ docker ps
+CONTAINER ID   IMAGE            COMMAND                CREATED     STATUS    PORTS                      NAMES
+fa402c00c4ff   test/backend…    "docker-entrypoint.s…" 1 hour ago  Up 1 hour 0.0.0.0:8080->8080/tcp…    backend-backend-1
+84f6caa1629c   postgis/postg…   "docker-entrypoint.s…" 1 hour ago  Up 1 hour 0.0.0.0:61480->5432/tcp…   backend-postgres-1
+
+```
+This will expose `http://127.0.0.1:8080/status`, `http://127.0.0.1:8080/status/database` and `http://127.0.0.1:8080/s3/create`.
+
+Don't forget to set up your AWS credentials in the container to test S3.
+
 
 
 ## License
