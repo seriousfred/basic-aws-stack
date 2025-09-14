@@ -8,8 +8,8 @@
    * [Prerequisites](#prerequisites)
    * [Usage](#usage)
    * [Sample backend service in NodeJS](#nodejs-api)
+   * [Clean up](#clean-up)
    * [License](#license)
-
 
 
 ## Solution overview
@@ -109,7 +109,7 @@ See `~/.aws/credentials`
 
 [Check here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) to create one.
 ```bash
-  github_token = "ghp_{random long string}""
+  github_token = "ghp_{random long string}"
 ```
 
 
@@ -158,6 +158,11 @@ This will expose `http://127.0.0.1:8080/status`, `http://127.0.0.1:8080/status/d
 Don't forget to set up your AWS credentials in the container to test S3.
 
 
+## Clean up
+
+```shell
+terraform destroy -var aws_profile="your-profile" -v all_vars="tfvars?"
+```
 
 ## License
 This library is licensed under the MIT-0 License.
