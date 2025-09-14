@@ -133,7 +133,10 @@ resource "aws_iam_role" "task_role" {
             "s3:*",
           ]
           Effect   = "Allow"
-          Resource = var.s3_arn
+          Resource = [
+            "${var.s3_arn}",
+            "${var.s3_arn}/*"
+          ]
         },
       ]
     })
