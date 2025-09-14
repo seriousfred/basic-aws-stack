@@ -30,6 +30,7 @@ module "rds" {
 }
 
 # load balancer
+# @todo conditionally create ALB (shoud receive listener_arn)
 module "alb" {
   source     = "./mods/alb"
   create_alb = true
