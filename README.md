@@ -6,7 +6,7 @@
    * [Infrastructure](#infrastructure)
    * [Prerequisites](#prerequisites)
    * [Usage](#usage)
-
+   * [License](#license)
 
 
 
@@ -116,3 +116,7 @@ or
 terraform plan -var aws_profile="your-profile" -var a=1 -var b=2 -var etc=...
 terraform apply -var aws_profile="your-profile" -var a=1 -var b=2 -var etc=...
 ```
+
+
+## License
+This library is licensed under the MIT-0 License.
