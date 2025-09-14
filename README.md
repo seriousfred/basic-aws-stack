@@ -4,6 +4,7 @@
 
    * [Solution overview](#solution-overview)
    * [Infrastructure](#infrastructure)
+   * [Prerequisites](#prerequisites)
 
 
 
@@ -64,4 +65,25 @@ About the modules:
   - github deployment role
   - envs on github actions
 
+
+## Prerequisites
+
+### AWS Credential
+See `~/.aws/credentials`
+```
+  [EXAMPLE]
+  aws_access_key_id = KEY
+  aws_secret_access_key = SECRET
+```
+### Terraform
+```bash
+  terraform -v # Terraform v1.13.2
+```
+
+### Github Token
+
+[Check here](https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token) to create one.
+```bash
+  github_token = "ghp_{random long string}""
+```
 
