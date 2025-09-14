@@ -31,7 +31,11 @@ resource "aws_iam_user_policy" "cicd_user_policy" {
             Action   = [
             "ecr:BatchCheckLayerAvailability",
             "ecr:GetDownloadUrlForLayer",
-            "ecr:BatchGetImage"
+            "ecr:BatchGetImage",
+            "ecr:InitiateLayerUpload",
+            "ecr:CompleteLayerUpload",
+            "ecr:PutImage",
+            "ecr:UploadLayerPart",
             ]
             Effect   = "Allow"
             Resource = "arn:aws:ecr:*:*:repository/${var.prefix}*"
@@ -49,8 +53,8 @@ resource "aws_iam_user_policy" "cicd_user_policy" {
             ]
             Effect   = "Allow"
           Resource = [
-            "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:cluster/${var.prefix}",
-            "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:service/${var.prefix}/*"
+            "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:cluster/${var.cluster}",
+            "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:service/${var.cluster}/*"
           ]
         }
     ]
