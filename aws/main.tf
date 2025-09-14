@@ -35,6 +35,15 @@ module "rds" {
   allowed_subnets = module.net.private_subnets
 }
 
+# load balancer
+module "alb" {
+  source = "./mods/alb"
+  create_alb = true
+  prefix = var.prefix
+  vpc_id = module.net.vpc_id
+  subnets = module.net.public_subnets
+}
+
 # s3
 module "s3" {
   source = "./mods/s3"
