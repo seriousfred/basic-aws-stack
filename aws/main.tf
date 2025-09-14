@@ -26,6 +26,7 @@ module "rds" {
   vpc_id          = module.net.vpc_id
   subnets         = module.net.data_subnets
   allowed_subnets = module.net.private_subnets
+  alarm_topic_arn = module.sns.sns_arn
 }
 
 # load balancer
@@ -86,5 +87,8 @@ module "ecs_service" {
   subnets           = module.net.private_subnets
   listener_arn      = module.alb.listener_arn
   listener_priority = 1
+  alarm_topic_arn   = module.sns.sns_arn
+}
+
 }
 
