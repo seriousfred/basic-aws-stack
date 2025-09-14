@@ -75,3 +75,18 @@ module "ecs_task_def" {
   s3_bucket = module.s3.s3_bucket_id
 }
 
+# service
+module "ecs_service" {
+  source = "./mods/ecs/service"
+  prefix = var.prefix
+  name = "service-${random_id.RANDOM_ID.hex}"
+  desired_count = "1"
+  cluster = module.ecs_cluster.ecs_cluster_id
+  task_definition = module.ecs_task_def.arn_task_definition
+  port = 8080
+  vpc_id = module.net.vpc_id
+  subnets = module.net.private_subnets
+  listener_arn = module.alb.listener_arn
+  listener_priority = 1
+}
+
