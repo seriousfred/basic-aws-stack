@@ -60,7 +60,8 @@ About the modules:
   - cloudwatch alarms
 
 - devops: configure github actions
-  - cicd user
-  - envs and secrets on guthub actions
+  - oidc github provider
+  - github deployment role
+  - envs on github actions
 
 
