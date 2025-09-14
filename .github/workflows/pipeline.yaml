@@ -1,5 +1,9 @@
 name: Build and Deploy Backend
 
+permissions:
+
+  id-token: write # Required for OIDC authentication
+
 on:
   push:
     branches: [main]
