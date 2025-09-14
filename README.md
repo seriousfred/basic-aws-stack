@@ -3,6 +3,7 @@
 ## Table of content
 
    * [Solution overview](#solution-overview)
+   * [General information](#general-information)
    * [Infrastructure](#infrastructure)
    * [Prerequisites](#prerequisites)
    * [Usage](#usage)
@@ -19,6 +20,27 @@ This repo contains Terraform code to deploy a NodeJS API that connects to a Post
   <img src="docs/solution.png"/>
 </p>
 
+
+## General information
+
+The idea of this project is show what can be done in some days considering my skills and my free time.
+
+Last time I used Terraform was 3 years ago. I prefer OpenTofu, but I spend most of my time fixing Cloudformartion infrastructure.
+
+### Ideas
+- Tracing
+- Autoscaling
+- Keys
+- WAF
+- Shield
+- More alerts
+- Cloudfront
+- DNS stuffs using Route53 and Cloudflare
+- SES
+- Python, Laravel, NextJs deployments
+- Services and migrations
+- Dashboards
+- Data analytics stuffs
 
 
 
