@@ -13,11 +13,6 @@ variable "subnets" {
   type        = list(string)
 }
 
-variable "allowed_subnets" {
-  description = "The subnets to communicate with the RDS instance"
-  type        = list(string)
-}
-
 variable "instance_class" {
   description = "The instance class for the RDS instance"
   type        = string

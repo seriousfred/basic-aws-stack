@@ -1,11 +1,9 @@
 # rds postgres module
 
-# getting cidr blocks
-data "aws_subnet" "allow" {
-  for_each = toset(var.allowed_subnets)
-  id       = each.value
+# Get VPC data to use VPC CIDR instead of individual subnets
+data "aws_vpc" "main" {
+  id = var.vpc_id
 }
-
 
 # security group
 resource "aws_security_group" "db_sg" {
@@ -17,14 +15,14 @@ resource "aws_security_group" "db_sg" {
     protocol    = "tcp"
     from_port   = var.database_port
     to_port     = var.database_port
-    cidr_blocks = [for s in data.aws_subnet.allow : s.cidr_block]
+    cidr_blocks = [data.aws_vpc.main.cidr_block]
   }
 
   egress {
     protocol    = "tcp"
     from_port   = 0
     to_port     = 0
-    cidr_blocks = [for s in data.aws_subnet.allow : s.cidr_block]
+    cidr_blocks = [data.aws_vpc.main.cidr_block]
   }
 
   tags = {

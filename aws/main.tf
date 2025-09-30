@@ -26,7 +26,6 @@ module "rds" {
   prefix          = var.prefix
   vpc_id          = module.net.vpc_id
   subnets         = module.net.data_subnets
-  allowed_subnets = module.net.private_subnets
   alarm_topic_arn = module.sns.sns_arn
 }
 
