@@ -21,6 +21,7 @@ module "net" {
 
 # rds
 module "rds" {
+  depends_on      = [module.net, module.sns]
   source          = "./mods/rds"
   prefix          = var.prefix
   vpc_id          = module.net.vpc_id
@@ -32,6 +33,7 @@ module "rds" {
 # load balancer
 # @todo conditionally create ALB (shoud receive listener_arn)
 module "alb" {
+  depends_on = [module.net]
   source     = "./mods/alb"
   create_alb = true
   prefix     = var.prefix
@@ -77,6 +79,7 @@ module "ecs_task_def" {
 
 # service
 module "ecs_service" {
+  depends_on        = [module.alb, module.rds, module.sns]
   source            = "./mods/ecs/service"
   prefix            = var.prefix
   name              = "service-${random_id.RANDOM_ID.hex}"
