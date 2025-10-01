@@ -1,0 +1,28 @@
+# Example terraform.tfvars file for updating backend service
+# Copy this to terraform.tfvars and update with your actual values
+
+task_definition_family = "service-taskdef"
+container_name         = "service"
+new_image_uri          = "123456789012.dkr.ecr.us-east-1.amazonaws.com/test-dev/service:latest"
+environment            = "dev"
+aws_region             = "us-east-1"
+
+# Environment variables to add/override
+environment_variables = {
+  NODE_ENV   = "production"
+  PORT       = "8080"
+  AWS_REGION = "us-east-1"
+  S3_BUCKET  = "test-dev-us-east-1-bucket"
+  # Add more environment variables as needed
+}
+
+# Secrets to add/override (name -> Secrets Manager/SSM Parameter ARN)
+secrets = {
+  DB_USERNAME = "arn:aws:secretsmanager:us-east-1:123456789012:secret:test-dev-postgres-credentials:DB_USERNAME::"
+  DB_PASSWORD = "arn:aws:secretsmanager:us-east-1:123456789012:secret:test-dev-postgres-credentials:DB_PASSWORD::"
+  DB_HOST     = "arn:aws:ssm:us-east-1:123456789012:parameter/test-dev/postgres/DB_HOST"
+  DB_NAME     = "arn:aws:ssm:us-east-1:123456789012:parameter/test-dev/postgres/DB_NAME"
+  DB_PORT     = "arn:aws:ssm:us-east-1:123456789012:parameter/test-dev/postgres/DB_PORT"
+  # Add more secrets as needed
+}
+
