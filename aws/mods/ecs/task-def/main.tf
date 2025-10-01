@@ -161,13 +161,21 @@ resource "aws_ecs_task_definition" "task_def" {
         image: "${var.repo}",
         environment: [
           {
+            name: "NODE_ENV",
+            value: "production"
+          },
+          {
+            name: "PORT",
+            value: tostring(var.port)
+          },
+          {
             name: "AWS_REGION",
             value: "${var.aws_region}"
           },
           {
             name: "S3_BUCKET",
-            value: var.s3_bucket
-          },
+            value: "${var.s3_bucket}"
+          }
         ],
         secrets: [
           {
