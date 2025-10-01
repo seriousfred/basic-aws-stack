@@ -76,6 +76,15 @@ data "aws_iam_policy_document" "github_deployment_policy" {
     effect   = "Allow"
     actions   = [
     "ecs:ListTaskDefinitions",
+    "ecs:DescribeTaskDefinition",
+    ]
+    resources = ["*"]
+  }
+
+  statement {
+    effect   = "Allow"
+    actions   = [
+      "ecs:RegisterTaskDefinition",
     ]
     resources = ["*"]
   }
@@ -87,7 +96,29 @@ data "aws_iam_policy_document" "github_deployment_policy" {
     ]
     resources = [
     "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:cluster/${var.cluster}",
-    "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:service/${var.cluster}/*"
+    "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:service/${var.cluster}/*",
+    "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:task-definition/${var.taskdef_family}",
+    ]
+  }
+
+  statement {
+    effect   = "Allow"
+    actions   = [
+      "ecs:TagResource",
+    ]
+    resources = [
+    "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:task-definition/${var.taskdef_family}",
+    "arn:aws:ecs:${var.aws_region}:${data.aws_caller_identity.current.account_id}:task-definition/${var.taskdef_family}:*",
+    ]
+  }
+
+  statement {
+    effect   = "Allow"
+    actions   = [
+      "iam:PassRole",
+    ]
+    resources = [
+      "arn:aws:iam::${data.aws_caller_identity.current.account_id}:role/*"
     ]
   }
 
