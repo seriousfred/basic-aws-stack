@@ -1,3 +1,7 @@
 output "arn_task_definition" {
   value = aws_ecs_task_definition.task_def.arn
 }
+
+output "family_name" {
+  value = aws_ecs_task_definition.task_def.family
+}
