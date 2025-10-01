@@ -5,11 +5,6 @@ provider "aws" {
   region  = var.aws_region
 }
 
-# utilities
-resource "random_id" "RANDOM_ID" {
-  byte_length = "6"
-}
-
 # modules
 # network
 module "net" {
@@ -43,19 +38,19 @@ module "alb" {
 # s3
 module "s3" {
   source      = "./mods/s3"
-  bucket_name = "${var.prefix}-${var.aws_region}-${random_id.RANDOM_ID.hex}"
+  bucket_name = "${var.prefix}-${var.aws_region}-bucket"
 }
 
 # sns
 module "sns" {
   source     = "./mods/sns"
-  topic_name = "${var.prefix}-alerts-${random_id.RANDOM_ID.hex}"
+  topic_name = "${var.prefix}-service-alerts"
 }
 
 # ecr
 module "ecr" {
   source    = "./mods/ecr"
-  repo_name = "${var.prefix}/services-${random_id.RANDOM_ID.hex}"
+  repo_name = "${var.prefix}/service"
 }
 
 # ecs cluster
@@ -68,7 +63,7 @@ module "ecs_cluster" {
 module "ecs_task_def" {
   source     = "./mods/ecs/task-def"
   prefix     = var.prefix
-  name       = "service-${random_id.RANDOM_ID.hex}"
+  name       = "service"
   repo       = module.ecr.ecr_repository_url
   aws_region = var.aws_region
   port       = 8080
@@ -81,7 +76,7 @@ module "ecs_service" {
   depends_on        = [module.alb, module.rds, module.sns]
   source            = "./mods/ecs/service"
   prefix            = var.prefix
-  name              = "service-${random_id.RANDOM_ID.hex}"
+  name              = "service"
   desired_count     = "1"
   cluster           = module.ecs_cluster.ecs_cluster_id
   task_definition   = module.ecs_task_def.arn_task_definition
@@ -103,6 +98,6 @@ module "devops" {
   ecr_repo         = module.ecr.ecr_repository_url
   aws_region       = var.aws_region
   cluster          = module.ecs_cluster.ecs_cluster_name
-  service          = "service-${random_id.RANDOM_ID.hex}"
+  service          = "service"
 }
 
