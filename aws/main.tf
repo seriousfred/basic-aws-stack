@@ -98,6 +98,7 @@ module "devops" {
   ecr_repo         = module.ecr.ecr_repository_url
   aws_region       = var.aws_region
   cluster          = module.ecs_cluster.ecs_cluster_name
+  taskdef_family   = module.ecs_task_def.family_name
   service          = "service"
 }
 

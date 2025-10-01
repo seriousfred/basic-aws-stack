@@ -133,3 +133,10 @@ resource "github_actions_variable" "ecs_service" {
   variable_name    = "ECS_SERVICE"
   value            = var.service
 }
+
+
+resource "github_actions_variable" "taskdef" {
+  repository       = var.repository_name
+  variable_name    = "TASK_DEFINITION_FAMILY"
+  value            = var.taskdef_family
+}

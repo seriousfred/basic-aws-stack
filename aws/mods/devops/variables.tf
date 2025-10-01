@@ -35,3 +35,8 @@ variable "service" {
   description = "ECS service name"
   type        = string
 }
+
+variable "taskdef_family" {
+  description = "ECS task definition family name"
+  type        = string
+}

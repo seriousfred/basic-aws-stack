@@ -1,7 +1,16 @@
+# Build and Deploy Backend Service
+# 
+# Required GitHub Repository Variables:
+# - AWS_REGION: AWS region (e.g., us-east-1)
+# - AWS_ROLE: IAM role ARN for OIDC authentication
+# - ECR_REPO: ECR repository URI (e.g., 123456789012.dkr.ecr.us-east-1.amazonaws.com/backend)
+# - TASK_DEFINITION_FAMILY: ECS task definition family name (e.g., dev-myapp-backend)
+# - CONTAINER_NAME: Container name in task definition (e.g., backend)
+# - ENVIRONMENT: Environment name (e.g., dev, staging, prod)
+
 name: Build and Deploy Backend
 
 permissions:
-
   id-token: write # Required for OIDC authentication
 
 on:
@@ -20,8 +29,9 @@ jobs:
     env:
       AWS_REGION: ${{ vars.AWS_REGION }}
       ECR_REPO: ${{ vars.ECR_REPO }}
-      ECS_CLUSTER: ${{ vars.ECS_CLUSTER }}
-      ECS_SERVICE: ${{ vars.ECS_SERVICE }}
+      TASK_DEFINITION_FAMILY: ${{ vars.TASK_DEFINITION_FAMILY }}
+      CONTAINER_NAME: ${{ vars.ECS_SERVICE }}
+      ENVIRONMENT: "production"
       IMAGE_TAG: ${{ github.sha }}
 
     steps:
@@ -48,10 +58,26 @@ jobs:
           docker push $ECR_REPO:$IMAGE_TAG
           docker push $ECR_REPO:latest
 
-      - name: Update ECS service
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ~1.7
+
+      - name: Terraform Init
+        working-directory: ./services/backend/aws
+        run: terraform init
+
+      - name: Terraform Plan
+        working-directory: ./services/backend/aws
         run: |
-          aws ecs update-service \
-            --cluster $ECS_CLUSTER \
-            --service $ECS_SERVICE \
-            --force-new-deployment \
-            --region $AWS_REGION
+          terraform plan \
+            -var="task_definition_family=$TASK_DEFINITION_FAMILY" \
+            -var="container_name=$CONTAINER_NAME" \
+            -var="new_image_uri=$ECR_REPO:$IMAGE_TAG" \
+            -var="environment=$ENVIRONMENT" \
+            -var="aws_region=$AWS_REGION" \
+            -out=tfplan
+
+      - name: Terraform Apply
+        working-directory: ./services/backend/aws
+        run: terraform apply -auto-approve tfplan
